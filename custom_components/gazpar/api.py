@@ -57,6 +57,7 @@ class  WebLoginSource():
             url=AUTH_TOKEN_URL,
             headers={"Content-type": "application/json","X-Requested-With": "XMLHttpRequest"},
             params={"checkAccountSetupComplete": "true","token": session_token,"redirectUrl": "https://monespace.grdf.fr"},
+            decodeJSON=False
 
         )
        
@@ -74,6 +75,7 @@ class  WebLoginSource():
         data: dict | None = None,
         headers: dict | None = None,
         params: dict | None = None,
+        decodeJSON: bool = True,
     ) -> Any:
         """Get information from the API."""
         try:
@@ -86,7 +88,10 @@ class  WebLoginSource():
                     params=params,
                 )
                 _verify_response_or_raise(response)
-                return await response.json()
+                if(decodeJSON):
+                    return await response.json()
+                else:
+                    return await response.text()
 
         except TimeoutError as exception:
             msg = f"Timeout error fetching information - {exception}"
