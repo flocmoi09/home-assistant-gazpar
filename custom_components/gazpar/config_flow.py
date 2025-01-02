@@ -69,5 +69,5 @@ class GazparConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def _test_credentials(self, username: str, password: str) -> None:
         """Validate credentials."""
-        client = WebLoginSource(username=username, password=password, session=async_create_clientsession(self.hass,kwargs={"cookie_jar": aiohttp.CookieJar()}))
+        client = WebLoginSource(username=username, password=password, session=async_create_clientsession(self.hass,cookie_jar= aiohttp.CookieJar()))
         await client._login()
