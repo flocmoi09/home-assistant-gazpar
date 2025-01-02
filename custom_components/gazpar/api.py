@@ -47,7 +47,7 @@ class  WebLoginSource():
             method="post",
             url=SESSION_TOKEN_URL,
             headers={"Content-type": "application/json", "domain":"grdf.fr","X-Requested-With": "XMLHttpRequest"},
-              data={"title": self.__username,"password": self.__password,"options": {"multiOptionalFactorEnroll": "false","warnBeforePasswordExpired": "false"}},
+            data={"username": self.__username,"password": self.__password,"options": {"multiOptionalFactorEnroll": "false","warnBeforePasswordExpired": "false"}},
 
         )
         session_token = response.get("sessionToken")
