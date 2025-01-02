@@ -34,11 +34,12 @@ def _verify_response_or_raise(response: aiohttp.ClientResponse) -> None:
 class  WebLoginSource():
 
     # ------------------------------------------------------
-    def __init__(self, username: str, password: str,  session: aiohttp.ClientSession):
+    def __init__(self, username: str, password: str, uniqueID:str, session: aiohttp.ClientSession):
 
         self.__username = username
         self.__password = password
         self._session = session
+        self.__uniqueID = uniqueID
 
     # ------------------------------------------------------
     async def _login(self) -> str:

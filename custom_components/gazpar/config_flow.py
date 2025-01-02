@@ -6,11 +6,12 @@ from homeassistant import config_entries
 from .const import DOMAIN,LOGGER
 from .api import WebLoginSource
 
-from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
+from homeassistant.const import CONF_PASSWORD, CONF_USERNAME,CONF_DEVICE_ID
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 import aiohttp
 import voluptuous as vol
 from homeassistant.helpers import selector
+
 class GazparConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Example config flow."""
     # The schema version of the entries that it creates
@@ -41,7 +42,7 @@ class GazparConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 )
                 self._abort_if_unique_id_configured()
                 return self.async_create_entry(
-                    title=user_input[CONF_USERNAME],
+                    title=user_input[CONF_DEVICE_ID],
                     data=user_input,
                 )
 
@@ -49,6 +50,14 @@ class GazparConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
+                    vol.Required(
+                        CONF_DEVICE_ID,
+                        default=(user_input or {}).get(CONF_DEVICE_ID, vol.UNDEFINED),
+                    ): selector.TextSelector(
+                        selector.TextSelectorConfig(
+                            type=selector.TextSelectorType.TEXT,
+                        ),
+                    ),
                     vol.Required(
                         CONF_USERNAME,
                         default=(user_input or {}).get(CONF_USERNAME, vol.UNDEFINED),
@@ -69,5 +78,5 @@ class GazparConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def _test_credentials(self, username: str, password: str) -> None:
         """Validate credentials."""
-        client = WebLoginSource(username=username, password=password, session=async_create_clientsession(self.hass,cookie_jar= aiohttp.CookieJar()))
+        client = WebLoginSource(username=username, password=password,uniqueID="", session=async_create_clientsession(self.hass,cookie_jar= aiohttp.CookieJar()))
         await client._login()
