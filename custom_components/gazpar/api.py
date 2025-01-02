@@ -66,7 +66,12 @@ class  WebLoginSource():
 
         return auth_token  # type: ignore
     
-    
+    async def async_get_data(self) -> Any:
+        """Get data from the API."""
+        return await self._api_wrapper(
+            method="get",
+            url="https://jsonplaceholder.typicode.com/posts/1",
+        )
 
     async def _api_wrapper(
         self,
