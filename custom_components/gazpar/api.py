@@ -46,7 +46,7 @@ class  WebLoginSource():
         response=await self._api_wrapper(
             method="post",
             url=SESSION_TOKEN_URL,
-            headers={"Content-type": "application/json; domain=grdf.fr;X-Requested-With: XMLHttpRequest"},
+            headers={"Content-type": "application/json", "domain":"grdf.fr","X-Requested-With": "XMLHttpRequest"},
               data={"title": self.__username,"password": self.__password,"options": {"multiOptionalFactorEnroll": "false","warnBeforePasswordExpired": "false"}},
 
         )
@@ -55,7 +55,7 @@ class  WebLoginSource():
         response=await self._api_wrapper(
             method="get",
             url=SESSION_TOKEN_URL,
-            headers={"Content-type": "application/json; X-Requested-With: XMLHttpRequest"},
+            headers={"Content-type": "application/json","X-Requested-With": "XMLHttpRequest"},
             params={"checkAccountSetupComplete": "true","token": session_token,"redirectUrl": "https://monespace.grdf.fr"},
 
         )
