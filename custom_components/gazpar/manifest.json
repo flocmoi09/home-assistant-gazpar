@@ -1,6 +1,7 @@
 {
   "domain": "gazpar",
   "name": "GrDF Gazpar",
+  "config_flow": true,
   "codeowners": [
     "@ssenart"
   ],
