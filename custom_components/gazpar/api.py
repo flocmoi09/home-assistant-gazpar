@@ -54,7 +54,7 @@ class  WebLoginSource():
         LOGGER.debug("Session token: %s", session_token)
         response=await self._api_wrapper(
             method="get",
-            url=SESSION_TOKEN_URL,
+            url=AUTH_TOKEN_URL,
             headers={"Content-type": "application/json","X-Requested-With": "XMLHttpRequest"},
             params={"checkAccountSetupComplete": "true","token": session_token,"redirectUrl": "https://monespace.grdf.fr"},
 
